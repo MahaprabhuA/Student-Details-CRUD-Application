@@ -1,10 +1,4 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "stud_det";
-$connection = new mysqli($servername, $username, $password, $dbname);
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
-}
+     $connection = mysqli_connect("localhost","root","");
+     $db = mysqli_select_db($connection,"stud_det");
 ?>

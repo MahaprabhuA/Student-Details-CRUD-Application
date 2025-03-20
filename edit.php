@@ -1,33 +1,34 @@
 <?php
 include 'DBconn.php';
 
-// Initialize variables to avoid "undefined variable" warnings
-$ID = $Name = $Department = $Gender = $DOB = $Skills = $Mobile_no = "";
+$ID = $Name = $Department = $Gender = $Skills = $Mobile_no = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-    // Retrieve form data safely
-    $ID = mysqli_real_escape_string($connection, $_POST['ID']);
-    $Name = mysqli_real_escape_string($connection, $_POST['Name']);
-    $Department = mysqli_real_escape_string($connection, $_POST['Department']);
-    $Gender = mysqli_real_escape_string($connection, $_POST['Gender']);
-    $DOB = mysqli_real_escape_string($connection, $_POST['Date']);
-    $Mobile_no = mysqli_real_escape_string($connection, $_POST['Mobile_no']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) 
+    {
+        $ID = $_POST['ID'] ?? ''; 
+        $Name = $_POST['Name'] ?? ''; 
+        $Department = $_POST['Department'] ?? ''; 
+        $Gender = $_POST['Gender'] ?? ''; 
+        $Mobile_no = $_POST['Mobile_no'] ?? ''; 
+        $Skills = isset($_POST['Skills']) ? implode(", ", $_POST['Skills']) : ''; 
 
-    // Handle multiple checkbox values for skills
-    if (isset($_POST['Skills']) && is_array($_POST['Skills'])) {
-        $Skills = implode(", ", $_POST['Skills']); // Convert array to comma-separated string
-    } else {
-        $Skills = ""; // No skills selected
+
+    if (isset($_POST['Skills']) && is_array($_POST['Skills']))
+    {
+        $Skills = implode(", ", $_POST['Skills']);
+    } 
+    else 
+    {
+        $Skills = "";
     }
-
-    // Insert into the database
-    $sql = "INSERT INTO Student_details (ID, Name, Department, Gender, `Date`, Skills, Mobile_no) 
-            VALUES ('$ID', '$Name', '$Department', '$Gender', '$DOB', '$Skills', '$Mobile_no')";
-
-    if (mysqli_query($connection, $sql)) {
-        header("Location: index.php"); // Redirect to index.php after successful insertion
+    $sql = "UPDATE student_details SET Name='$Name', Department='$Department', Gender='$Gender', Skills='$Skills', Mobile_no='$Mobile_no' WHERE ID='$ID'";
+    if (mysqli_query($connection, $sql)) 
+    {
+        header("Location: index.php");
         exit();
-    } else {
+    } 
+    else 
+    {
         echo "Error: " . mysqli_error($connection);
     }
 }
@@ -49,11 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                         <h1>Student Details Application</h1>
                     </div>
                     <div class="card-body">
-                        <form action="add.php" method="post">
+                    <form action="edit.php" method="POST">
                             <div class="form-group">
-                                <label>ID</label>
-                                <input type="text" name="ID" class="form-control" placeholder="Enter ID" required>
-                            </div>
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" name="Name" class="form-control" placeholder="Enter Name">
@@ -76,10 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                                 <input type="radio" name="Gender" value="Male" required> Male
                                 <input type="radio" name="Gender" value="Female" required> Female
                                 <input type="radio" name="Gender" value="Other" required> Other
-                            </div>
-                            <div class="form-group">
-                                <label>DOB</label>
-                                <input type="date" name="Date" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label>Skills</label><br>

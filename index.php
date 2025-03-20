@@ -26,7 +26,6 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Department</th>
                                     <th scope="col">Gender</th>
-                                    <th scope="col">DOB</th>
                                     <th scope="col">Skills</th>
                                     <th scope="col">Mobile No</th>
                                     </tr>
@@ -44,7 +43,6 @@
                                             $Name = $row['Name'];
                                             $Department = $row['Department'];
                                             $Gender = $row['Gender'];
-                                            $DOB = $row['Date'];
                                             $Skills = $row['Skills'];
                                             $Mobile_no = $row['Mobile_no'];
                                         ?>
@@ -54,9 +52,9 @@
                                             <td><?php echo $Name ?></td>
                                             <td><?php echo $Department ?></td>
                                             <td><?php echo $Gender ?></td>
-                                            <td><?php echo $DOB ?></td>
                                             <td><?php echo $Skills ?></td>
                                             <td><?php echo $Mobile_no ?></td>
+                                            <td>
                                             <a href='edit.php?edit=<?php echo $uid ?>' class="btn btn-success text-light">Edit</a>
                                             <a href='delete.php?dlt=<?php echo $uid ?>' class="btn btn-danger text-light">Delete</a>
                                             </td>
